@@ -237,18 +237,13 @@ int main(int argc, char** argv)
         return -2;
 
       std::cout << "Comparing " << file << std::endl;
-      std::cout << "A: " << a.width << "x" << a.height << " " << a.data.size()
-                << std::endl;
-      std::cout << "B: " << b.width << "x" << b.height << " " << b.data.size()
-                << std::endl;
 
       RawImage diff = CreateDiff(a, b);
 
-      std::cout << "DIFF: " << b.width << "x" << b.height << " "
-                << b.data.size() << std::endl;
-
       if (IsZeroDiff(diff))
         continue;
+
+      std::cout << file << " has changed" << std::endl;
 
       WriteBMP(diff, file + ".dff.bmp");
       changes.push_back(file);
