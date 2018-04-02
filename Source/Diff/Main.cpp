@@ -10,7 +10,7 @@
 #include <vector>
 
 #ifdef _WIN32
-// TODO: Windows imports
+#include <Windows.h>
 #else
 #include <dirent.h>
 #endif
@@ -30,7 +30,19 @@ std::vector<std::string> GetFiles(const std::string& path)
 {
   std::vector<std::string> files;
 #ifdef _WIN32
-#error "Windows is currently unsupported, sorry"
+  WIN32_FIND_DATA data;
+
+  for (auto* handle = FindFirstFile((path + "\\*.bmp").c_str(), &data);
+       FindNextFile(handle, &data);) {
+    if (handle == INVALID_HANDLE_VALUE) {
+      std::cerr << "Bad handle" << std::endl;
+      return {};
+    }
+
+    std::cout << "Loop." << std::endl;
+    if (!(data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || true)
+      files.push_back(data.cFileName);
+  }
 #else
   auto* dir = opendir(path.c_str());
   if (dir == nullptr)
@@ -135,7 +147,7 @@ bool WriteBMP(const RawImage& image, const std::string& path)
     return false;
   }
 
-  u32 size = 0x36 + image.data.size();
+  u32 size = 0x36 + static_cast<u32>(image.data.size());
 
   // Magic
   ofs << "BM";
@@ -154,7 +166,7 @@ bool WriteBMP(const RawImage& image, const std::string& path)
   WriteData<u16>(ofs, 1);
   WriteData<u16>(ofs, 24);
   WriteData<u32>(ofs, 0);
-  WriteData<u32>(ofs, image.data.size());
+  WriteData<u32>(ofs, static_cast<u32>(image.data.size()));
   WriteData<u32>(ofs, image.width);
   WriteData<u32>(ofs, image.height);
   WriteData<u64>(ofs, 0);
