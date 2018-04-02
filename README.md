@@ -45,7 +45,7 @@ cuteci-diff [summary/html] [folderA] [folderB]
 ## Requirements
 - A C++14 compatible compiler
   - *Note: Your application does not have to be built in C++14. It's only a requirement for the library itself and the diff tool*
-- CMake 3.9 or newer
+- CMake 3.1 or newer
 - Qt 5
 ## License
 CuteCI is licensed under the GNU General Public License v3 or any later version at your option.
