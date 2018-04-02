@@ -1,0 +1,11 @@
+build
+*~
+.directory
+
+# Temp. ignore all thoes file types
+*.sh
+*.so
+*.dll
+*.cc
+moc_*.cpp
+a.out
