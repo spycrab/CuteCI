@@ -32,15 +32,14 @@ std::vector<std::string> GetFiles(const std::string& path)
 #ifdef _WIN32
   WIN32_FIND_DATA data;
 
-  for (auto* handle = FindFirstFile((path + "\\*.bmp").c_str(), &data);
-       FindNextFile(handle, &data);) {
+  auto* handle = FindFirstFile((path + "\\*.bmp").c_str(), &data);
+  for (bool okay = true; okay; okay = FindNextFile(handle, &data)) {
     if (handle == INVALID_HANDLE_VALUE) {
       std::cerr << "Bad handle" << std::endl;
       return {};
     }
 
-    std::cout << "Loop." << std::endl;
-    if (!(data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || true)
+    if (!(data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
       files.push_back(data.cFileName);
   }
 #else
