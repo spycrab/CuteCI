@@ -13,6 +13,7 @@
 
 #include "CuteCI.h"
 #include "Filter.h"
+#include "Flags.h"
 
 template <typename F>
 static void postToThread(F&& fun, QThread* thread = qApp->thread())

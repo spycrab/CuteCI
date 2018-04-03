@@ -22,8 +22,6 @@ enum Flags {
 };
 
 void Init(QObject* parent, int flags = TAKE_SCREENSHOTS | AUTO_QUIT);
-
-extern int flags;
 } // namespace CuteCI
 
 #endif

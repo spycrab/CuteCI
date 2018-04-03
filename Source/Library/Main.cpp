@@ -3,6 +3,8 @@
 // Refer to the LICENSE.txt file included.
 
 #include "CuteCI.h"
+
+#include "Flags.h"
 #include "Thread.h"
 
 #include <iostream>
