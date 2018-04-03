@@ -236,55 +236,78 @@ int main(int argc, char** argv)
       if (b.data.size() == 0)
         return -2;
 
-      std::cout << "Comparing " << file << std::endl;
+      std::cerr << "Comparing " << file << std::endl;
 
       RawImage diff = CreateDiff(a, b);
 
       if (IsZeroDiff(diff))
         continue;
 
-      std::cout << file << " has changed" << std::endl;
+      std::cerr << file << " has changed" << std::endl;
 
       WriteBMP(diff, file + ".dff.bmp");
       changes.push_back(file);
     }
   }
 
-  std::cout << std::endl;
+  std::string output = "";
+
+  if (mode == "html") {
+    output += "<html><head><title> Comparing " + dirA + " / " + dirB +
+              "</title></head><body><h2>Comparing " + dirA + " / " + dirB +
+              "</h2><table "
+              "border=1><thead><tr><th>File</th><th>" +
+              dirA + "</th><th>Diff</th><th>" + dirB +
+              "</"
+              "th></thead><tbody>";
+  }
 
   // Handle Output
   for (const auto& file : deletions) {
     if (mode == "summary") {
-      std::cout << "REMOVED " << file << std::endl;
+      output += "REMOVED " + file + "\n";
     } else {
-      // TODO: HTML
+      output += "<tr><th>" + file + "</th><th><img src='" + dirA + "/" + file +
+                "' /></th><th><b>N/A</b></th><th><font "
+                "color=red>DELETED</font></th></tr>";
     }
   }
 
   for (const auto& file : additions) {
     if (mode == "summary") {
-      std::cout << "ADDED " << file << std::endl;
+      output += "ADDED " + file + "\n";
     } else {
-      // TODO: HTML
+      output += "<tr><th>" + file +
+                "</th><th><font "
+                "color=green>ADDED</font></th><th><b>N/A</b></th><th><img "
+                "src='" +
+                dirB + "/" + file + "' /></th></tr>";
     }
   }
 
   for (const auto& file : changes) {
     if (mode == "summary") {
-      std::cout << "CHANGED " << file << std::endl;
+      output += "CHANGED " + file + "\n";
     } else {
-      // TODO: HTML
+      output += "<tr><th>" + file + "</th><th><img src='" + dirA + "/" + file +
+                "' /></th><th><img src='" + file +
+                ".dff.bmp' /></th><th><img src='" + dirB + "/" + file +
+                "' /></th></tr>";
     }
   }
 
+  if (mode == "html")
+    output += "</tbody></table></body></html>";
+
+  std::cout << output << std::endl << std::endl;
+
   // This short verdict will be printed regardless of output mode
   auto change_count = deletions.size() + additions.size() + changes.size();
-  std::cout << std::endl;
   if (change_count == 0) {
-    std::cout << "No changes detected." << std::endl;
+    std::cerr << "No changes detected." << std::endl;
     return 0;
   } else {
-    std::cout << change_count << " change(s) detected." << std::endl;
+    std::cerr << change_count << " change(s) detected." << std::endl;
   }
 
   return 0;
