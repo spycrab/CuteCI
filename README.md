@@ -12,54 +12,50 @@ Integration is as easy as including ``CuteCI.h`` and initializing it (somewhere 
 
 
 ```c++
+// Enable CUTECI
+#define CUTECI
 #include <CuteCI.h>
-
 // ...
-
 int main(int argc, char** argv) {
   QApplication app(argc, argv);
-
   QMainWindow win;
 
   CUTECI_INIT(&win, CUTECI_DEFAULT_FLAGS);
-
   // ...
-
   return app.exec();
 }
-
 ```
-
-When CuteCI is not enabled by defining ``CUTECI`` the ``CUTECI_INIT`` instruction will just do nothing, no additional if-guarding required!
 
 When using CuteCI with ``CUTECI_DEFAULT_FLAGS`` it will stay in the background and take screenshots of all widgets in your application and then safely close it after a set amount of time.
 
 Additionally you can create named screenshots by using ``CUTECI_RENDER``:
 
-```c++
-#include <CuteCI.h>
+When CuteCI is not enabled by defining ``CUTECI`` all ``CUTECI_`` calls will be ignored. No additional if-guarding required!
 
+```c++
+// Enable CUTECI
+#define CUTECI
+#include <CuteCI.h>
 // ...
-void MyCustomWidget::CreateComponents()
+void MyWidget::CreateComponents()
 {
-  // ...
   m_button = new QPushButton("Hello World!"));
-  // ...
   layout->addWidget(m_button);
   // ...
-
   CUTECI_RENDER(m_button, "Important_Button");
 }
-
 ```
+
+See [Library Docs](Docs/Library.md) for more detailed information.
 
 ## Diff Tool
 ``cuteci-diff`` is used to generate reports based on the information gathered from ``libcuteci``. It can both generate a short summary for the terminal as well as a fancy HTML report! The diff tool is intentionally minimalistic to further help integration with your existing CI solutions.
 
-### Usage
 ```
 cuteci-diff [summary/html] [folderA] [folderB]
 ```
+
+See [Diff Tool Docs](Docs/Diff.md) for more detailed information.
 
 ## Requirements
 - A C++14 compatible compiler
