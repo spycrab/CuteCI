@@ -2,11 +2,11 @@
 // Licensed under GPLv3
 // Refer to the LICENSE.txt file included.
 
-#pragma once
+#include <QString>
 
 namespace CuteCI
 {
-bool TestFlag(int flag);
-
-extern int flags;
+void Log(const QString msg);
+void Warn(const QString msg);
+void Error(const QString msg);
 }

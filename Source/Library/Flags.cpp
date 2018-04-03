@@ -2,11 +2,10 @@
 // Licensed under GPLv3
 // Refer to the LICENSE.txt file included.
 
-#pragma once
+#include "Flags.h"
 
 namespace CuteCI
 {
-bool TestFlag(int flag);
-
-extern int flags;
+int flags = 0;
+bool TestFlag(int flag) { return flags & flag; }
 }

@@ -11,8 +11,6 @@
 
 namespace CuteCI
 {
-int flags = 0;
-
 void Init(QObject* parent, int flags)
 {
   CuteCI::flags = flags;

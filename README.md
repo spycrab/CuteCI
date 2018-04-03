@@ -12,7 +12,7 @@ Integration is as easy as including ``CuteCI.h`` and initializing it (somewhere 
 
 
 ```c++
-#include <CuteCI>
+#include <CuteCI.h>
 
 // ...
 
@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 
   QMainWindow win;
 
-  CUTECI_INIT(&win);
+  CUTECI_INIT(&win, CUTECI_DEFAULT_FLAGS);
 
   // ...
 
@@ -32,7 +32,26 @@ int main(int argc, char** argv) {
 
 When CuteCI is not enabled by defining ``CUTECI`` the ``CUTECI_INIT`` instruction will just do nothing, no additional if-guarding required!
 
-When starting your application with CuteCI enabled it will stay in the background and take screenshots of all widgets in your application and then safely close it after a set amount of time.
+When using CuteCI with ``CUTECI_DEFAULT_FLAGS`` it will stay in the background and take screenshots of all widgets in your application and then safely close it after a set amount of time.
+
+Additionally you can create named screenshots by using ``CUTECI_RENDER``:
+
+```c++
+#include <CuteCI.h>
+
+// ...
+void MyCustomWidget::CreateComponents()
+{
+  // ...
+  m_button = new QPushButton("Hello World!"));
+  // ...
+  layout->addWidget(m_button);
+  // ...
+
+  CUTECI_RENDER(m_button, "Important_Button");
+}
+
+```
 
 ## Diff Tool
 ``cuteci-diff`` is used to generate reports based on the information gathered from ``libcuteci``. It can both generate a short summary for the terminal as well as a fancy HTML report! The diff tool is intentionally minimalistic to further help integration with your existing CI solutions.

@@ -15,9 +15,11 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
 set(LIB_SOURCES
+  Source/Library/Flags.cpp
+  Source/Library/Log.cpp
   Source/Library/Main.cpp
-  Source/Library/Thread.cpp
-  Source/Library/Filter.cpp)
+  Source/Library/Render.cpp
+  Source/Library/Thread.cpp)
 
 add_library(cuteci SHARED ${LIB_SOURCES})
 include_directories(Include)

@@ -4,9 +4,9 @@
 
 #pragma once
 
+class QWidget;
+
 namespace CuteCI
 {
-bool TestFlag(int flag);
-
-extern int flags;
-}
+void AutoRender(QWidget* widget);
+} // namespace CuteCI
